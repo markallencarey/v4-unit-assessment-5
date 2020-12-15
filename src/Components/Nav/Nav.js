@@ -4,6 +4,9 @@ import homeLogo from './../../assets/home_logo.png';
 import newLogo from './../../assets/new_logo.png';
 import logoutLogo from './../../assets/shut_down.png';
 import './Nav.css';
+import { Link, withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { updateUser, logout } from '../../redux/reducer'
 
 class Nav extends Component {
   constructor(props) {
@@ -28,19 +31,27 @@ class Nav extends Component {
   }
   
   render() {
-      return this.props.location.pathname !== '/' &&
+    console.log(this.props)  
+    return this.props.location.pathname !== '/' &&
         <div className='nav'>
           <div className='nav-profile-container'>
             <div className='nav-profile-pic'></div>
             <p>placeholder username</p>
           </div>
           <div className='nav-links'>
-            <img className='nav-img' src={homeLogo} alt='home' />
-            <img className='nav-img' src={newLogo} alt='new post' />
+            <Link to='/dash'>
+              <img className='nav-img' src={homeLogo} alt='home' />
+            </Link>
+            <Link to='/form'>
+              <img className='nav-img' src={newLogo} alt='new post' />
+            </Link>
           </div>
-          <img className='nav-img logout' src={logoutLogo} alt='logout' />
+          <Link to='/' onClick={this.logout()}>
+            <img className='nav-img logout' src={logoutLogo} alt='logout' />
+          </Link>
         </div>
   }
 }
 
-export default Nav;
+const mapStateToProps = () => {}
+export default connect(mapStateToProps, {updateUser, logout})(withRouter(Nav));
