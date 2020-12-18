@@ -1,4 +1,5 @@
 const bcrypt = require('bcryptjs')
+const e = require('express')
 
 module.exports = {
   register: async (req, res) => {
@@ -23,12 +24,14 @@ module.exports = {
   login: async (req, res) => {
     const db = req.app.get('db')
     const { username, password } = req.body
-    
+
+
     const [existingUser] = await db.user.find_user_by_username([username])
     if (!existingUser) {
       return res.status(404).send('User does not exist')
     }
 
+    console.log(existingUser)
     const isAuthenticated = bcrypt.compareSync(password, existingUser.password)
     if (!isAuthenticated) {
       return res.status(401).send('Incorrect password')

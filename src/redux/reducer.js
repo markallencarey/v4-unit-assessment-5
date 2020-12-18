@@ -1,8 +1,7 @@
 // import axios from 'axios'
 
 const initialState = {
-  username: '',
-  profilePic: ''
+  user: {}
 }
 
 const UPDATE_USER = 'UPDATE_USER'
@@ -24,6 +23,7 @@ export function logout() {
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     case UPDATE_USER:
+      console.log(action.payload)
       return {
         ...state,
         user: action.payload

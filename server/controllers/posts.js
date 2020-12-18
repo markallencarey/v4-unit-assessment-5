@@ -1,6 +1,7 @@
 module.exports = {
     readPosts: async (req, res) => {
-      let { id } = req.session.user;
+    // let { id } = req.session.user;
+    let { id } = req.session
       let { mine, search, oldest } = req.query;
       const db = await req.app.get('db')
       if (mine && !search) {
@@ -40,17 +41,20 @@ module.exports = {
     createPost: (req, res) => {
       //code here
       const db = req.app.get('db')
-      const { id } = req.session.user
-      const { title, img, content } = req.body
+      
+      const { id, title, img, content } = req.body
 
       const date = new Date
 
-      if (id) {
-        db.post.create_post([id, title, img, content, date])
-        res.status(200)
-      } else {
-        res.status(403)
-      }
+      // if (id) {
+      //   console.log('invoked')
+      db.post.create_post([id, title, img, content, date]).then(() => 
+          res.sendStatus(200)
+        )
+      //   res.status(200)
+      // } else {
+      //   res.status(403)
+      // }
     },
     readPost: (req, res) => {
       req.app.get('db').post.read_post(req.params.id)

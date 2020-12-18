@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import noImage from './../../assets/no_image.jpg';
 import './Form.css';
+import { connect } from 'react-redux'
 
 class Form extends Component {
   constructor(props) {
@@ -14,11 +15,11 @@ class Form extends Component {
     this.submit = this.submit.bind(this);
   }
 
-  submit() {
-    axios.post('/api/post', this.state)
-      .then(() => 'replace this string with something useful')
+  submit(e) {
+    e.preventDefault()
+    axios.post('/api/post', {id: this.props.id, title: this.state.title, img: this.state.img, content: this.state.content})
+      .then(() => this.props.history.push('/dash'))
       .catch((err) => console.log(err))
-    this.props.history.push('/dash')
   }
   
   render() {
@@ -42,10 +43,13 @@ class Form extends Component {
             <textarea value={this.state.content} onChange={e => this.setState({ content: e.target.value })} />
           </div>
         </div>
-        <button onClick={this.submit} className='dark-button'>Post</button>
+        <button onClick={(e) => this.submit(e)} className='dark-button'>Post</button>
       </div>
     );
   }
 }
 
-export default Form;
+function mapStateToProps(state) {
+  return state
+}
+export default connect(mapStateToProps)(Form);

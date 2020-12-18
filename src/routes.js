@@ -8,8 +8,8 @@ import Post from './Components/Post/Post'
 export default (
   <Switch>
     <Route exact path='/' component={Auth} />
-    <Route exact path='/dash' component={Dash} />
-    <Route exact path='/post/:id' component={Post} />
-    <Route exact path='/form' component={Form} />
+    <Route path='/dash' component={Dash} />
+    <Route path='/post/:id' component={Post} />
+    <Route path='/form' component={Form} />
   </Switch>
 )
